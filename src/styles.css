@@ -1,0 +1,145 @@
+:root {
+  font-family: system-ui, sans-serif;
+  background: #fbf4e8;
+  color: #5a2330;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.invitation-app,
+.invitation-frame {
+  display: block;
+  width: 100%;
+  height: 100dvh;
+  border: 0;
+  background: #fbf4e8;
+}
+
+.cinematic-scene {
+  position: fixed;
+  z-index: 5;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: all;
+  background: radial-gradient(circle at 50% 43%, #fff6df 0 7%, #f7ded5 40%, #7d2036 130%);
+  transition: opacity 1.15s ease, visibility 1.15s step-end;
+}
+
+.scene-unveil {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scene-halo {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: min(72vw, 420px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(201, 162, 75, .55);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(201, 162, 75, .08), 0 0 58px 16px rgba(255, 226, 160, .4);
+  transform: translate(-50%, -50%) scale(.68);
+  opacity: 0;
+  animation: halo-arrive 2.7s cubic-bezier(.2, .85, .25, 1) .15s forwards;
+}
+
+.scene-curtain {
+  position: absolute;
+  top: -8%;
+  bottom: -8%;
+  width: 56%;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.09) 0 2px, transparent 2px 28px),
+    linear-gradient(90deg, #4e0d20, #8b2940 70%, #bc5366);
+  box-shadow: inset -16px 0 24px rgba(47, 4, 15, .35), 0 0 28px rgba(67, 8, 24, .35);
+  transition: transform 2.1s cubic-bezier(.65, 0, .2, 1);
+}
+
+.scene-curtain-left { left: -8%; transform-origin: left center; }
+.scene-curtain-right { right: -8%; transform-origin: right center; transform: scaleX(-1); }
+.scene-arrive .scene-curtain-left { transform: translateX(-16%) rotateY(-22deg); }
+.scene-arrive .scene-curtain-right { transform: translateX(16%) scaleX(-1) rotateY(-22deg); }
+.scene-unveil .scene-curtain-left { transform: translateX(-105%) rotateY(-35deg); }
+.scene-unveil .scene-curtain-right { transform: translateX(105%) scaleX(-1) rotateY(-35deg); }
+
+.scene-garland {
+  position: absolute;
+  top: -5px;
+  width: 28px;
+  height: 48vh;
+  background: radial-gradient(circle, #ffcc45 0 30%, #ef9300 33% 57%, transparent 60%) 0 0 / 28px 28px repeat-y;
+  filter: drop-shadow(0 2px 1px rgba(110, 31, 47, .25));
+  transform-origin: top center;
+  animation: garland-sway 3.4s ease-in-out infinite alternate;
+}
+
+.scene-garland span { position: absolute; inset: 100% 8px auto; height: 34px; width: 12px; border-radius: 0 0 12px 12px; background: #8f2a3f; }
+.scene-garland-left { left: 11%; animation-delay: -.8s; }
+.scene-garland-right { right: 11%; animation-delay: -2.1s; }
+
+.scene-emblem {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 112px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid #c9a24b;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(.4) rotate(-50deg);
+  opacity: 0;
+  box-shadow: inset 0 0 0 6px rgba(255, 248, 232, .6), 0 8px 22px rgba(110, 31, 47, .18);
+  animation: emblem-arrive 1.4s cubic-bezier(.2, 1.25, .35, 1) .55s forwards;
+}
+
+.scene-emblem::before,
+.scene-emblem::after,
+.scene-emblem i {
+  content: '';
+  position: absolute;
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 50% 50% 50% 8%;
+  background: linear-gradient(135deg, #f8de91, #b98225);
+  transform-origin: 0 100%;
+}
+
+.scene-emblem::before { transform: rotate(0deg); }
+.scene-emblem::after { transform: rotate(72deg); }
+.scene-emblem i:nth-child(1) { transform: rotate(144deg); }
+.scene-emblem i:nth-child(2) { transform: rotate(216deg); }
+.scene-emblem i:nth-child(3) { transform: rotate(288deg); }
+
+.petal-field { position: absolute; inset: 0; }
+.scene-petal {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  aspect-ratio: 1.35;
+  border-radius: 90% 10% 90% 10%;
+  background: linear-gradient(135deg, #ffd4df, #b9345c);
+  opacity: 0;
+  animation: petal-fall var(--duration) linear var(--delay) infinite;
+}
+
+@keyframes halo-arrive { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.68); } 45%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes emblem-arrive { to { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); } }
+@keyframes garland-sway { to { transform: rotate(4deg); } }
+@keyframes petal-fall { 0% { opacity: 0; transform: translate3d(0, -8vh, 0) rotate(0); } 12% { opacity: .8; } 88% { opacity: .7; } 100% { opacity: 0; transform: translate3d(var(--drift), 120vh, 0) rotate(340deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-scene { display: none; }
+}
