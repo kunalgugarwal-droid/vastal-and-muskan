@@ -24,6 +24,19 @@ body,
   background: #fbf4e8;
 }
 
+.creator-watermark {
+  position: fixed;
+  z-index: 4;
+  left: max(14px, env(safe-area-inset-left, 0px));
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  color: rgba(110, 31, 47, .62);
+  font: 600 10px/1.2 system-ui, sans-serif;
+  letter-spacing: .045em;
+  text-shadow: 0 1px 8px rgba(255, 250, 240, .85);
+  pointer-events: none;
+}
+
 .cinematic-scene {
   position: fixed;
   z-index: 5;

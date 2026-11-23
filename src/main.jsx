@@ -69,6 +69,7 @@ function InvitationApp() {
         allow="autoplay"
         onLoad={handleInvitationLoad}
       />
+      <p className="creator-watermark">Made by Kunal Gugarwal</p>
       <CinematicScene phase={phase} />
     </main>
   );
